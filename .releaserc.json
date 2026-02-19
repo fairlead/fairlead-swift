@@ -1,0 +1,21 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "sed -i 's/public let version = \"[^\"]*\"/public let version = \"${nextRelease.version}\"/' Sources/Mataki/Version.swift"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["Sources/Mataki/Version.swift"],
+        "message": "chore(release): ${nextRelease.version} [skip ci]"
+      }
+    ],
+    "@semantic-release/github"
+  ]
+}
